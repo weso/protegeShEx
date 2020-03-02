@@ -12,6 +12,9 @@
 	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<org.osgi.framework.system.packages.extra>
+		javax.xml.parsers,org.xml.sax,org.xml.sax.ext,org.xml.sax.helpers,javafx.collections,javafx.embed.swing,javafx.geometry,javafx.scene,javafx.scene.text,javafx.scene.layout,javafx.scene.paint,javafx.scene.web,javafx.application,javafx.beans.property,javafx.beans.value,
+		</org.osgi.framework.system.packages.extra>
 	</properties>
   	
 	<dependencies>
@@ -20,10 +23,15 @@
             <artifactId>protege-editor-owl</artifactId>
 			<version>5.0.0</version>
         </dependency>
-        
 
-        
-   
+		
+		<!-- https://mvnrepository.com/artifact/org.openjfx/javafx -->
+			<dependency>
+			    <groupId>org.openjfx</groupId>
+			    <artifactId>javafx</artifactId>
+			    <version>11</version>
+			    <type>pom</type>
+			</dependency>
 		        
 	</dependencies>
 
@@ -59,17 +67,61 @@
 						<Bundle-ClassPath>.</Bundle-ClassPath>
 						<Bundle-SymbolicName>${project.artifactId};singleton:=true</Bundle-SymbolicName>
 						<Bundle-Vendor>The Protege Development Team</Bundle-Vendor>
-						<Import-Package>
-							org.protege.editor.owl.*;version="5.0.0", <!-- equivalent to [5.0.0,infinity) -->
-							*
-						</Import-Package>
+						
+						<Embed-Dependency>javafx</Embed-Dependency>
+                        <Embed-Transitive>true</Embed-Transitive>
+						<Export-Package>
+							
+							com.sun.javafx, com.sun.javafx.animation, com.sun.java
+						 fx.applet, com.sun.javafx.application, com.sun.javafx.beans, com.sun.
+						 javafx.beans.event, com.sun.javafx.binding, com.sun.javafx.charts, co
+						 m.sun.javafx.collections, com.sun.javafx.css, com.sun.javafx.css.conv
+						 erters, com.sun.javafx.css.parser, com.sun.javafx.cursor, com.sun.jav
+						 afx.effect, com.sun.javafx.embed, com.sun.javafx.event, com.sun.javaf
+						 x.font, com.sun.javafx.font.coretext, com.sun.javafx.font.directwrite
+						 , com.sun.javafx.font.freetype, com.sun.javafx.font.t2k, com.sun.java
+						 fx.fxml, com.sun.javafx.fxml.builder, com.sun.javafx.fxml.expression,
+						  com.sun.javafx.geom, com.sun.javafx.geom.transform, com.sun.javafx.g
+						 eometry, com.sun.javafx.iio, com.sun.javafx.iio.bmp, com.sun.javafx.i
+						 io.common, com.sun.javafx.iio.gif, com.sun.javafx.iio.ios, com.sun.ja
+						 vafx.iio.jpeg, com.sun.javafx.iio.png, com.sun.javafx.image, com.sun.
+						 javafx.image.impl, com.sun.javafx.jmx, com.sun.javafx.logging, com.su
+						 n.javafx.media, com.sun.javafx.menu, com.sun.javafx.perf, com.sun.jav
+						 afx.print, com.sun.javafx.property, com.sun.javafx.property.adapter, 
+						 com.sun.javafx.robot, com.sun.javafx.robot.impl, com.sun.javafx.runti
+						 me, com.sun.javafx.runtime.async, com.sun.javafx.runtime.eula, com.su
+						 n.javafx.scene, com.sun.javafx.scene.control, com.sun.javafx.scene.co
+						 ntrol.behavior, com.sun.javafx.scene.control.skin, com.sun.javafx.sce
+						 ne.control.skin.caspian, com.sun.javafx.scene.control.skin.caspian.im
+						 ages, com.sun.javafx.scene.control.skin.modena, com.sun.javafx.scene.
+						 control.skin.resources, com.sun.javafx.scene.input, com.sun.javafx.sc
+						 ene.layout, com.sun.javafx.scene.layout.region, com.sun.javafx.scene.
+						 paint, com.sun.javafx.scene.shape, com.sun.javafx.scene.text, com.sun
+						 .javafx.scene.transform, com.sun.javafx.scene.traversal, com.sun.java
+						 fx.scene.web, com.sun.javafx.scene.web.behavior, com.sun.javafx.scene
+						 .web.skin, com.sun.javafx.sg, com.sun.javafx.sg.prism, com.sun.javafx
+						 .sg.prism.web, com.sun.javafx.stage, com.sun.javafx.text, com.sun.jav
+						 afx.tk, com.sun.javafx.tk.quantum, com.sun.javafx.util, com.sun.javaf
+						 x.webkit, com.sun.javafx.webkit.drt, com.sun.javafx.webkit.prism, com
+						 .sun.javafx.webkit.prism.resources, com.sun.javafx.webkit.prism.theme
+						 , com.sun.javafx.webkit.theme, javafx, javafx.animation, javafx.appli
+						 cation, javafx.beans, javafx.beans.binding, javafx.beans.property, ja
+						 vafx.beans.property.adapter, javafx.beans.value, javafx.collections, 
+						 javafx.collections.transformation, javafx.concurrent, javafx.css, jav
+						 afx.embed, javafx.embed.swing, javafx.event, javafx.fxml, javafx.geom
+						 etry, javafx.print, javafx.scene, javafx.scene.canvas, javafx.scene.c
+						 hart, javafx.scene.control, javafx.scene.control.cell, javafx.scene.e
+						 ffect, javafx.scene.image, javafx.scene.input, javafx.scene.layout, j
+						 avafx.scene.media, javafx.scene.paint, javafx.scene.shape, javafx.sce
+						 ne.text, javafx.scene.transform, javafx.scene.web, javafx.stage, java
+						 fx.util, javafx.util.converter,
+					
+						</Export-Package>
+						
 					
 						
 					</instructions>
 				</configuration>
-				<dependencies>
-				  
-				</dependencies>
             </plugin>
             
 			<plugin>
@@ -79,15 +131,6 @@
 					<pde>true</pde>
 				</configuration>
 			</plugin>
-
-			<plugin>
-            			<artifactId>maven-compiler-plugin</artifactId>
-		 	        <version>3.1</version>
-			        <configuration>
-                			<fork>true</fork>
-			                <executable>C:\Program Files\Java\jdk1.8.0_241\bin\javac.exe</executable>
-			        </configuration>
-        		</plugin>
 		</plugins>
 	</build>
 </project>
