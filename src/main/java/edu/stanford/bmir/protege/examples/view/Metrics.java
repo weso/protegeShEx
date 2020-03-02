@@ -43,42 +43,9 @@ public class Metrics extends JPanel {
         add(refreshButton);
 
         JFXPanel jfxPanel = new JFXPanel();
-//        jfxPanel.setBorder(new LineBorder(new Color(0, 0, 0), 6));
-//        createScene();  
-//         
-//        setLayout(new BorderLayout());  
-        //add(jfxPanel, BorderLayout.CENTER);
-        
-
+        add(jfxPanel);
     }
     
-//    private void createScene() {  
-//        PlatformImpl.startup(new Runnable() {  
-//            @Override
-//            public void run() {  
-//                 
-//                stage = new Stage();  
-//                 
-//                stage.setTitle("Hello Java FX");  
-//                stage.setResizable(true);  
-//   
-//                Group root = new Group();  
-//                Scene scene = new Scene(root,80,20);  
-//                stage.setScene(scene);  
-//                 
-//                // Set up the embedded browser:
-//                browser = new WebView();
-//                URL url = this.getClass().getResource("./index.html");
-//                browser.getEngine().load(url.toString());
-//
-//                
-//                ObservableList<Node> children = root.getChildren();
-//                children.add(browser);                     
-//                 
-//                jfxPanel.setScene(scene);  
-//            }  
-//        });  
-//    }
     
     public void dispose() {
         modelManager.removeListener(modelListener);
