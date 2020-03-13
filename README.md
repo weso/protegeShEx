@@ -3,5 +3,5 @@
 This plugin adds [ShEx](http://shex.io/) features to the [Protégé](https://protege.stanford.edu/) editor.
 
 <p align="center">
-  <img src="https://github.com/weso/protegeShEx/blob/master/docs/protegeShEx.png" alt="size"/>
+  <img src="https://github.com/weso/protegeShEx/blob/master/docs/protegeShExPlugin.png" alt="size"/>
 </p>
