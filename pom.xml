@@ -12,9 +12,6 @@
 	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<org.osgi.framework.system.packages.extra>
-		javax.xml.parsers,org.xml.sax,org.xml.sax.ext,org.xml.sax.helpers,javafx.collections,javafx.embed.swing,javafx.geometry,javafx.scene,javafx.scene.text,javafx.scene.layout,javafx.scene.paint,javafx.scene.web,javafx.application,javafx.beans.property,javafx.beans.value,
-		</org.osgi.framework.system.packages.extra>
 	</properties>
   	
 	<dependencies>
@@ -101,7 +98,7 @@
 						 fx.scene.web, com.sun.javafx.scene.web.behavior, com.sun.javafx.scene
 						 .web.skin, com.sun.javafx.sg, com.sun.javafx.sg.prism, com.sun.javafx
 						 .sg.prism.web, com.sun.javafx.stage, com.sun.javafx.text, com.sun.jav
-						 afx.tk, com.sun.javafx.tk.quantum, com.sun.javafx.util, com.sun.javaf
+						 afx.tk, com.sun.javafx.tk.quantum, com.sun.javafx.util, com.sun.java
 						 x.webkit, com.sun.javafx.webkit.drt, com.sun.javafx.webkit.prism, com
 						 .sun.javafx.webkit.prism.resources, com.sun.javafx.webkit.prism.theme
 						 , com.sun.javafx.webkit.theme, javafx, javafx.animation, javafx.appli

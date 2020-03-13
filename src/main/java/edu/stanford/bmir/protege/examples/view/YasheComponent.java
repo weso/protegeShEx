@@ -4,10 +4,11 @@ import java.awt.BorderLayout;
 import org.protege.editor.owl.ui.view.AbstractOWLViewComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.awt.Color;
 
-public class ExampleViewComponent extends AbstractOWLViewComponent {
-
-    private static final Logger log = LoggerFactory.getLogger(ExampleViewComponent.class);
+public class YasheComponent extends AbstractOWLViewComponent {
+	
+    private static final Logger log = LoggerFactory.getLogger(YasheComponent.class);
 
     private Metrics metricsComponent;
 

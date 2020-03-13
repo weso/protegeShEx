@@ -9,20 +9,21 @@ import javax.swing.JPanel;
 import org.protege.editor.owl.model.OWLModelManager;
 import org.protege.editor.owl.model.event.EventType;
 import org.protege.editor.owl.model.event.OWLModelManagerListener;
-
-
-import javafx.embed.swing.JFXPanel;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import java.awt.BorderLayout;
+import java.awt.GridLayout;
 
 public class Metrics extends JPanel {
 
+    private static final Logger log = LoggerFactory.getLogger(Metrics.class);
+	
     private JButton refreshButton = new JButton("Refresh");
 
     private JLabel textComponent = new JLabel();
 
     private OWLModelManager modelManager;
     
-
 
     private ActionListener refreshAction = e -> recalculate();
     
@@ -33,19 +34,20 @@ public class Metrics extends JPanel {
     };
     
     public Metrics(OWLModelManager modelManager) {
+    	setBackground(java.awt.Color.ORANGE);
     	this.modelManager = modelManager;
         recalculate();
         
         modelManager.addListener(modelListener);
         refreshButton.addActionListener(refreshAction);
+        setLayout(new GridLayout(0, 1, 0, 0));
         
-        add(textComponent);
-        add(refreshButton);
-
-        JFXPanel jfxPanel = new JFXPanel();
-        add(jfxPanel);
-    }
     
+        
+        add(new YASHE());  
+ 
+    }
+ 
     
     public void dispose() {
         modelManager.removeListener(modelListener);
@@ -59,4 +61,6 @@ public class Metrics extends JPanel {
         }
         textComponent.setText("Total classes = " + count);
     }
+    
+    
 }
