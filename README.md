@@ -24,7 +24,7 @@ As YASHE is built in JavaScript  we use the JavaFX library in order to re-use YA
  
  6. Open in a text editor the config.xml file
  
- 7. Add the following line in the <frameworkProperties>:
+ 7. Add the following line in the frameworkProperties:
   
         <property name="org.osgi.framework.system.packages.extra" 
         value="javax.xml.parsers,org.xml.sax,org.xml.sax.ext,org.xml.sax.helpers,javafx.collections,javafx.embed.swing,javafx.geometry,javafx.scene,javafx.scene.text,javafx.scene.layout,javafx.scene.paint,javafx.scene.web,javafx.application,javafx.beans.property,javafx.beans.value"/> 
