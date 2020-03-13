@@ -18,7 +18,7 @@ This plugin adds [ShEx](http://shex.io/) features to the [Protégé](https://pro
 
 4. Copy the JAR file from the target directory to the "plugins" subdirectory of your Protege distribution.
 
-As YASHE is built in JavaScript  we use the JavaFX library in order to re-use YASHE code. This library doesn´t work at all with protege at the moment and while we look for another more elegant solution we need to do the following steps:
+As YASHE is built in JavaScript  we use the JavaFX library in order to re-use YASHE code. This library doesn´t work at all with protege at the moment ([more info](http://protege-project.136.n4.nabble.com/ShEx-Editor-Plugin-td4673267.html)) and while we look for another more elegant solution we need to do the following steps:
 
  5. Change into Protege/conf directory
  
