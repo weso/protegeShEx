@@ -6,35 +6,60 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>YASHE</title>
 
-  <link href="yashe.min.css" rel="stylesheet" type="text/css" />
+  <!--EDITOR STYLES-->
+  <link href="./lib/yashe.min.css" rel="stylesheet" type="text/css" />
+  <link href="./lib/yate.min.css" rel="stylesheet" type="text/css" />
+  <link href="./lib/yasme.min.css" rel="stylesheet" type="text/css" />
 
+  <!--Bootstrap-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <!--Bootstrap-->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+  <!--MATERIAL-->
+  <link href="https://unpkg.com/material-components-web@v4.0.0/dist/material-components-web.min.css" rel="stylesheet">
+  <script src="https://unpkg.com/material-components-web@v4.0.0/dist/material-components-web.min.js"></script>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+  rel="stylesheet">
+
+  <!--AXIOS SCRIPT-->
+	<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+  <link href="./css/style.css" rel="stylesheet" type="text/css" />
+
   </head>
   <body>
 
   
-  <div id="showcase"></div>
+  <div class="globalContainer">
+    <h1 id='log'></h1>
+    <div class="topContainer">
+      <div id="yateContainer"></div>
+      <div id="yasheContainer"></div>
+    </div>
+    <div id="yasmeContainer"></div>
+    <div id="validateZone" class="validate">
+      <div class="validateHeader">
+        <button class="validateBtn" onclick="validate();">
+          <h1>Validate</h1>
+        </button>
+      </div>
 
+    </div>
+  </div>
 
-    
-  <script src="yashe.bundled.min.js"></script>
-  <script type="text/javascript">
+ 
+ 
+  <!--EDITOR SCRIPTS-->
+  <script src="./lib/yashe.bundled.min.js"></script>
+  <script src="./lib/yate.bundled.min.js"></script>
+  <script src="./lib/yasme.bundled.min.js"></script>
+  <script src="./src/main.js"></script>
 
-    var yashe = YASHE(document.getElementById('showcase'), {
-      persistent:null,
-      fullscreen:true
-    });
-
-	yashe.setOption("fullScreen", true);
-
-  </script>
-
-<style>
-
-	.CodeMirror {
-      font-size: 21px !important;
-}
-</style>
 
 </body>
 </html>

@@ -42,8 +42,7 @@ public class Metrics extends JPanel {
         refreshButton.addActionListener(refreshAction);
         setLayout(new GridLayout(0, 1, 0, 0));
         
-    
-        
+   
         add(new YASHE());  
  
     }
