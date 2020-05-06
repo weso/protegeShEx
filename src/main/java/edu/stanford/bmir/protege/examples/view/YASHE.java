@@ -1,39 +1,36 @@
 package edu.stanford.bmir.protege.examples.view;
 
+import java.awt.GridLayout;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URI;
+
 import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
-import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.paint.Color;
+import javafx.scene.layout.StackPane;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
-import javafx.stage.Stage;
-import java.awt.GridLayout;
-import javafx.scene.layout.StackPane;
-
-
-import es.weso.rdf.Prefix;
 
 public class YASHE extends JPanel {
 	
+	private static final Logger log = LoggerFactory.getLogger(ExampleViewComponent.class);
 
-	//Prefix p = new Prefix("xsd");
-	
 	private static WebView browser;
 	private static JFXPanel fxPanel;
 	private JButton swingButton;
 	private static WebEngine webEngine;
-
-	/** for communication to the Javascript engine. */
-//	private JSObject javascriptConnector;
-//
-//	/** for communication from the Javascript engine. */
-//	private JavaConnector javaConnector = new JavaConnector();;
 
 	public YASHE() {
 		setBackground(java.awt.Color.WHITE);
@@ -75,53 +72,34 @@ public class YASHE extends JPanel {
 		Scene scene = new Scene(stack);
 		browser = new WebView();
 		webEngine = browser.getEngine();
-		// webEngine.load("http://www.weso.es/YASHE/");
+		
+	
 
-		// set up the listener
-//		webEngine.getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) -> {
-//			if (Worker.State.SUCCEEDED == newValue) {
-//				// set an interface object named 'javaConnector' in the web engine's page
-//				JSObject window = (JSObject) webEngine.executeScript("window");
-//				window.setMember("javaConnector", javaConnector);
-//
-//				// get the Javascript connector object.
-//				javascriptConnector = (JSObject) webEngine.executeScript("getJsConnector()");
-//			}
-//		});
+	
+	    InputStream in = getClass().getResourceAsStream("/edu/stanford/bmir/protege/examples/view/index.html"); 
+	    BufferedReader reader = new BufferedReader(new InputStreamReader(in));
+		
+		StringBuilder content = new StringBuilder();
+		String line;
+	    try {
+			while ((line = reader.readLine()) != null) {
+			    content.append(line);
+			    content.append(System.lineSeparator());
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
-		webEngine.load(
-				"file:/C:/Users/pablo/OneDrive/Escritorio/Plugin/protege-plugin-examples/src/main/java/edu/stanford/bmir/protege/examples/view/index.html");
-		// URL url = Metrics.class.getResource("./index.html");
-		// webEngine.load(url.toString());
+	    
+	     webEngine.loadContent(content.toString());
+	     
+	    
+
+		//webEngine.load(getClass().getResourceAsStream("/edu/stanford/bmir/protege/examples/view/index.html").toString()); //does not work...
 		stack.getChildren().add(browser);
 
 		return (scene);
 	}
-
-//	public class JavaConnector {
-//
-//		public void validate(String rdfData, String schema, String shapeMap) {
-//
-//			Validate v = new Validate();
-//
-//			IO<ResultShapeMap> validation = v.validateStr(rdfData, "", schema, shapeMap);
-//
-//			try {
-//				ResultShapeMap result = validation.unsafeRunSync();
-//				System.out.println("ResultShapeMap: " + result.toJson().spaces2());
-//				javascriptConnector.call("showResult", result.toJson().spaces2());
-//			} catch (Exception e) {
-//				System.out.println("error");
-//			}
-//
-//		}
-//
-//		public void log(String json) {
-//
-//			System.out.println("visualize");
-//			System.out.println(json);
-//
-//		}
-//	}
 
 }
