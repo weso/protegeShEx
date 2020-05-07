@@ -1,16 +1,42 @@
+   
 var yate = YATE(document.getElementById('yateContainer'));
-var yashe = YASHE(document.getElementById('yasheContainer'));
+var yashe = YASHE(document.getElementById('yasheContainer'),{
+  persisten:null,
+  showShareButton:false,
+  showValidateButton:false,
+});
 var yasme = YASME(document.getElementById('yasmeContainer'));
-//yashe.setOption("fullScreen", true);
 
-yate.setSize(null,550);
-yashe.setSize(null,550);
-yasme.setSize(null,100);
+yate.setSize(null,505);
+yashe.setSize(null,895);
+yasme.setSize(null,895);
+
+yate.setValue(
+  `prefix :     <http://example.org/>
+
+:ex1 :p 1 .
+:ex2 :p 1,2 .
+:ex3 :p 1 .
+:ex4 :p 1,2 .
+:ex5 :p 1 .
+:ex6 :p 1,2 .
+:ex7 :p 1 .
+:ex8 :p 1,2 .`)
+
+yashe.setValue(
+  `PREFIX :       <http://example.org/>
+:S{
+ :p . 
+}`)
+
+yasme.setValue(
+  `:ex1@:S,:ex2@:S,:ex3@:S,:ex4@:S,:ex5@:S,:ex6@:S,:ex7@:S,:ex8@:S`)
+
 
 
 var validate = function(){
 
-
+  console.log('ee')
   let schemaContent = yashe.getValue();
   let dataContent = yate.getValue();
   let shapeMapContent = yasme.getValue();
@@ -43,11 +69,11 @@ let formData = params2Form(params);
             crossDomain: true
         }).then(response => response.data)
             .then((data) => {
-          
+              $('#log').text('pass')
               $('#table').remove();
               $('#validateZone').append(
-                $('<div class="table-responsive">'+
-                    '<table id="table" class="table table-striped">'+ 
+                $('<div id="table" class="table-responsive">'+
+                    '<table  class="table table-striped">'+ 
                       '<thead id="thead" class="thead-dark">'+ 
                         '<tr>'+ 
                           '<th scope="col">Id</th>'+ 
@@ -85,14 +111,20 @@ let formData = params2Form(params);
                 
             })
             .catch(function (error) {
-              console.log("err")
-
+              console.log(error)
+              $('#log').text(error.toString())
             });
 
 
  
 }
 
+
+function refresh(editor){
+  setTimeout(()=>{
+    editor.refresh();
+  },200)
+}
 
 
 var params2Form = function(params) {
