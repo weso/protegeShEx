@@ -122,16 +122,14 @@ public class YASHE extends JPanel {
 
 
 			log.info("antes");
-			//javascriptConnector.call("showResult", rdfData);
+			javascriptConnector.call("showResult", "antes");
 		
 			IO<ResultShapeMap> validation = validateStr(rdfData, "", schema, shapeMap);
-			
-			log.info(""+validation);
 			
 		
 			log.info("después");
 			
-		//	javascriptConnector.call("showResult", rdfData);
+			javascriptConnector.call("showResult", "después");
 			
 			try {
 				log.info("try");
@@ -171,36 +169,12 @@ public class YASHE extends JPanel {
 																	resultShapeMap -> IO.pure(resultShapeMap))))))))));
 		}
 
-		public IO<ShapeMap> getShapeMap(String shapeMapFile, RDFReader rdf, Schema schema) {
-			return getContents(shapeMapFile)
-					.flatMap(shapeMapStr -> EitherIOUtils.eitherStr2IO(
-							ShapeMap.fromString(shapeMapStr, "Compact", none, rdf.getPrefixMap(), schema.prefixMap())))
-					.handleErrorWith(e -> IO.raiseError(new RuntimeException(
-							"Cannot parse shapeMap from file: " + shapeMapFile + ": " + e.getMessage())));
-		}
-
-		public IO<RDFAsJenaModel> readRDF(String fileName, String format) {
-			// log.info("Reading data file " + fileName);
-			return RDFAsJenaModel.fromFile(Paths.get(fileName).toFile(), format, none).handleErrorWith(e -> IO
-					.raiseError(new RuntimeException("Cannot parse RDF from file: " + fileName + ":" + e.getMessage())));
-		}
-
 		public IO<RDFAsJenaModel> readRDFStr(String str, String format) {
 			log.info("read");
 			return RDFAsJenaModel.fromChars(str, format, none).handleErrorWith(
 					e -> IO.raiseError(new RuntimeException("Cannot parse RDF from str: " + str + ":" + e.getMessage())));
 		}
 
-		public IO<String> getContents(String fileName) {
-			try {
-				Path path = Paths.get(fileName);
-				List<String> lines = Files.readAllLines(path);
-				String str = String.join("\n", lines);
-				return IO.apply(() -> str);
-			} catch (IOException e) {
-				return IO.raiseError(e);
-			}
-		}
 		
 	}
 
