@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>edu.stanford.protege</groupId>
+	<artifactId>protege.plugin.examples</artifactId>
+	<version>2.0.0-SNAPSHOT</version>
+	<packaging>bundle</packaging>
+
+	<name>Protege Plugin Examples</name>
+	<description>Example plug-ins for the Protege Desktop ontology editor, e.g., views, menu items, etc.</description>
+
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>edu.stanford.protege</groupId>
+			<artifactId>protege-editor-owl</artifactId>
+			<version>5.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.openjfx</groupId>
+			<artifactId>javafx</artifactId>
+			<version>11</version>
+			<type>pom</type>
+		</dependency>
+		<dependency>
+			<groupId>es.weso</groupId>
+			<artifactId>shaclex_2.12</artifactId>
+			<version>0.1.59</version>
+			<type>pom</type>
+		</dependency>
+
+	</dependencies>
+	<repositories>
+		<repository>
+			<id>BintrayJCenter</id>
+			<name>BintrayJCenter</name>
+			<url>https://jcenter.bintray.com/</url>
+			<layout>default</layout>
+		</repository>
+		<repository>
+			<id>sonatypesnapshots</id>
+			<name>sonatype-snapshots</name>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+			<layout>default</layout>
+		</repository>
+		<repository>
+			<id>sonatypereleases</id>
+			<name>sonatype-releases</name>
+			<url>https://oss.sonatype.org/content/repositories/releases/</url>
+			<layout>default</layout>
+		</repository>
+		<repository>
+			<id>Bintray</id>
+			<name>Bintray</name>
+			<url>http://dl.bintray.com/labra/maven/</url>
+			<layout>default</layout>
+		</repository>
+	</repositories>
+	<build>
+
+		<resources>
+			<resource>
+				<!-- Use resource filtering to replace references to the artifactId in 
+					the plugin.xml file -->
+				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+			</resource>
+		</resources>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.3</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<version>3.0.0</version>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Bundle-Activator>org.protege.editor.owl.ProtegeOWL</Bundle-Activator>
+						<Bundle-ClassPath>.</Bundle-ClassPath>
+						<Bundle-SymbolicName>${project.artifactId};singleton:=true</Bundle-SymbolicName>
+						<Bundle-Vendor>The Protege Development Team</Bundle-Vendor>
+						<Embed-Dependency>javafx</Embed-Dependency>
+						<Embed-Transitive>true</Embed-Transitive>
+						<Export-Package>
+						 es.weso.*,
+						 scala.*,
+						 netscape.javascript.*,
+						 cats.*
+			
+						</Export-Package>
+						
+						<Import-Package>
+							!com.typesafe.*,
+							!fs2.*,
+							!io.circe.*,
+							!com.sun.org.apache.xerces.internal.impl.xpath.regex,
+							!diffson.*,
+							!org.eclipse.rdf4j.*,
+							!org.scalactic.source.*,
+							!org.scalatest.*,
+							!org.antlr.*,
+							!org.apache.*,
+							!org.jgrapht.*,
+							!org.scalactic.*,
+							!sext.*,
+							
+							*
+						</Import-Package>
+						
+					</instructions>
+				</configuration>
+			</plugin>
+
+			<plugin>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>2.9</version>
+				<configuration>
+					<pde>true</pde>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>
