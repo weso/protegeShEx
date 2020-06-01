@@ -35,10 +35,11 @@ import netscape.javascript.JSObject;
 import scala.Option;
 
 
-public class YASHE extends JPanel {
+
+public class Yashe extends JPanel {
 	
 
-	 private static final Logger log = LoggerFactory.getLogger(YASHE.class);
+	 private static final Logger log = LoggerFactory.getLogger(Yashe.class);
 
 	private static WebView browser;
 	private static JFXPanel fxPanel;
@@ -51,7 +52,7 @@ public class YASHE extends JPanel {
 	/** for communication from the Javascript engine. */
 	private JavaConnector javaConnector = new JavaConnector();
 
-	public YASHE() {
+	public Yashe() {
 		setBackground(java.awt.Color.WHITE);
 
 		fxPanel = new JFXPanel();
@@ -65,7 +66,6 @@ public class YASHE extends JPanel {
 		});
 		setLayout(new GridLayout(0, 1, 0, 0));
 
-		add(fxPanel);
 
 	}
 
@@ -120,26 +120,33 @@ public class YASHE extends JPanel {
 
 		public void validate(String rdfData, String schema, String shapeMap) {
 
-
-			log.info("antes");
-			javascriptConnector.call("showResult", "antes");
-		
-			IO<ResultShapeMap> validation = validateStr(rdfData, "", schema, shapeMap);
+			//new Thread(new Valid(rdfData, schema, shapeMap)).start();
 			
-		
-			log.info("después");
-			
-			javascriptConnector.call("showResult", "después");
-			
-			try {
-				log.info("try");
-				ResultShapeMap result = validation.unsafeRunSync();
-				log.info(result.toJson().spaces2());
-				javascriptConnector.call("showResult", result.toJson().spaces2());
-			} catch (Exception e) {
-				log.info("error");
-				System.out.println("error");
-			}
+			Platform.runLater(new Runnable() {
+			    @Override
+			    public void run() {
+			    	log.info("antes");
+					javascriptConnector.call("showResult", "antes");
+				
+					IO<ResultShapeMap> validation = validateStr(rdfData, "", schema, shapeMap);
+					
+				
+					log.info("después");
+					
+					javascriptConnector.call("showResult", "después");
+					
+					try {
+						log.info("try");
+						ResultShapeMap result = validation.unsafeRunSync();
+						log.info(result.toJson().spaces2());
+						javascriptConnector.call("showResult", result.toJson().spaces2());
+					} catch (Exception e) {
+						log.info("error");
+						System.out.println("error");
+					}
+					
+			    }
+			});
 
 		}
 
@@ -149,6 +156,7 @@ public class YASHE extends JPanel {
 			System.out.println(json);
 
 		}
+		
 		Option<IRI> none = Option.empty();
 		Option<RDFReader> noneRDF = Option.empty();
 
@@ -177,7 +185,73 @@ public class YASHE extends JPanel {
 
 		
 	}
+	
+	
+	public class Valid implements Runnable  {
+		
+		private String rdfData;
+		private String schema;
+		private String shapeMap;
+		
+		public Valid(String rdfData,String schema,String shapeMap) {
+			this.rdfData = rdfData;
+			this.schema = schema;
+			this.shapeMap = shapeMap;
+		}
 
+		@Override
+		public void run() {
+		
+			log.info("antes");
+			javascriptConnector.call("showResult", "antes");
+		
+			IO<ResultShapeMap> validation = validateStr(rdfData, "", schema, shapeMap);
+			
+		
+			log.info("después");
+			
+			javascriptConnector.call("showResult", "después");
+			
+			try {
+				log.info("try");
+				ResultShapeMap result = validation.unsafeRunSync();
+				log.info(result.toJson().spaces2());
+				javascriptConnector.call("showResult", result.toJson().spaces2());
+			} catch (Exception e) {
+				log.info("error");
+				System.out.println("error");
+			}
+			
+		}
+		
+		Option<IRI> none = Option.empty();
+		Option<RDFReader> noneRDF = Option.empty();
+
+		public IO<ResultShapeMap> validateStr(String dataStr, String ontologyStr, String schemaStr, String shapeMapStr) {
+			log.info("validate");
+			return readRDFStr(dataStr, "TURTLE").flatMap(rdfData -> readRDFStr(ontologyStr, "TURTLE")
+					.flatMap(ontologyData -> rdfData.merge(ontologyData).flatMap(merged -> Schema
+							.fromString(schemaStr, "SHEXC", none, noneRDF)
+							.flatMap(schema -> EitherIOUtils
+									.eitherStr2IO(ShapeMap.fromString(shapeMapStr, "Compact", none, merged.getPrefixMap(),
+											schema.prefixMap()))
+									.flatMap(shapeMap -> ShapeMap
+											.fixShapeMap(shapeMap, merged, merged.getPrefixMap(), schema.prefixMap())
+											.flatMap(fixedShapeMap -> ResolvedSchema.resolve(schema, none)
+													.flatMap(resolvedSchema -> Validator
+															.validate(resolvedSchema, fixedShapeMap, merged)
+															.flatMap(result -> result.toResultShapeMap().flatMap(
+																	resultShapeMap -> IO.pure(resultShapeMap))))))))));
+		}
+
+		public IO<RDFAsJenaModel> readRDFStr(String str, String format) {
+			log.info("read");
+			return RDFAsJenaModel.fromChars(str, format, none).handleErrorWith(
+					e -> IO.raiseError(new RuntimeException("Cannot parse RDF from str: " + str + ":" + e.getMessage())));
+		}
+	}
+
+	
 
 	
 	
